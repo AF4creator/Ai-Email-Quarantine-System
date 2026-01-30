@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block container_class %}auth-container{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+{% endblock %}
+{% block content %}
+<div class="auth-box">
+  <h3><i class="fas fa-user-plus"></i> Create Secure Account</h3>
+  {% if error %}<div class="error">{{ error }}</div>{% endif %}
+  {% if success %}<div class="success">{{ success }}</div>{% endif %}
+  
+  <form method="POST">
+    <label><i class="fas fa-user"></i> Full Name</label>
+    <input type="text" name="user_name" required autofocus>
+
+    <label><i class="fas fa-envelope"></i> Email</label>
+    <input type="email" name="email" required>
+
+    <label><i class="fas fa-key"></i> Gmail App Password</label>
+    <input type="password" name="password" placeholder="16-character app password" required>
+
+    <label><i class="fas fa-server"></i> IMAP Server</label>
+    <input type="text" name="imap_server" value="imap.gmail.com" required>
+
+    <label><i class="fas fa-hashtag"></i> IMAP Port</label>
+    <input type="number" name="imap_port" value="993" min="1" max="9999">
+
+    <label>
+      <input type="checkbox" name="consent" required>
+      I consent to scan my mailbox for security threats
+    </label>
+
+    <button type="submit">
+      <i class="fas fa-rocket"></i> Create Account
+    </button>
+  </form>
+
+  <p class="switch-link">
+    Already have an account? <a href="/login">Login here</a>
+  </p>
+</div>
+{% endblock %}

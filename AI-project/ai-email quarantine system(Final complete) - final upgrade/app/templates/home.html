@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+{% block container_class %}home-container{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+{% endblock %}
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/home.js') }}"></script>
+{% endblock %}
+{% block content %}
+<section class="hero fade-in">
+  <div class="container">
+    <h1>Secure Your Inbox with 
+      <span class="highlight">AI-Email Quarantine System</span>
+    </h1>
+    
+  <div class="hero-content">
+  <p class="lead">
+  AI-powered email security that detects threats, quarantines suspicious messages,
+  and gives users full control with review and reporting.
+</p>
+
+</div>
+
+
+    <div class="hero-buttons">
+      <a href="/login" class="btn btn-primary"><i class="fas fa-rocket"></i> Get Start</a>
+      <a href="#demo" class="btn btn-outline"><i class="fas fa-play"></i> Watch Demo</a>
+    </div>
+    <div class="ai-badge">
+      <i class="fas fa-brain"></i> Powered by Logistic Regression (95%+ Accuracy)
+    </div>
+  </div>
+</section>
+
+<section id="stats" class="stats-section">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <h3>10K+</h3>
+        <p>Emails Scanned</p>
+      </div>
+      <div class="stat-item">
+        <h3>98%</h3>
+        <p>Threat Detection</p>
+      </div>
+      <div class="stat-item">
+        <h3>500+</h3>
+        <p>Users Protected</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features" class="features-section">
+  <div class="container">
+    <h2 class="section-title">Core Features</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <i class="fas fa-shield-alt icon"></i>
+        <h4>Real-Time IMAP Scanning</h4>
+        <p>Connects to Gmail via secure IMAP. Scans inbox instantly for SPF/DKIM/DMARC failures & URL threats.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-chart-line icon"></i>
+        <h4>ML-Powered Classification</h4>
+        <p>TF-IDF + Logistic Regression categorizes as Safe/Suspicious/Quarantined. Customizable thresholds.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-tachometer-alt icon"></i>
+        <h4>Smart Dashboard</h4>
+        <p>Visual stats, one-click actions: Release, Delete, Whitelist. Track trends over time.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-lock icon"></i>
+        <h4>Enterprise Security</h4>
+        <p>OAuth auth, encrypted storage, audit logs. Ready for teams & production.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="demo" class="demo-section">
+  <div class="container">
+    <h2 class="section-title">Live Demo</h2>
+
+    <div class="demo-video-wrapper">
+      <video class="demo-video" controls autoplay muted loop>
+        <source src="{{ url_for('static', filename='AI-Email Quarantine System - video demo.mp4') }}" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+  </div>
+</section>
+
+<section class="faq-section">
+  <h2 class="faq-title">Frequently Asked Questions</h2>
+
+  <div class="faq-container">
+
+    <div class="faq-item">
+      <button class="faq-question">
+        What is a Gmail App Password?
+        <span class="icon">+</span>
+      </button>
+      <div class="faq-answer">
+        A Gmail App Password is a unique 16-digit code that allows legacy or
+        third-party applications (which do not support "Sign in with Google")
+        to securely access your Gmail account without using your main password.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        How do I create a Gmail App Password in 2026?
+        <span class="icon">+</span>
+      </button>
+      <div class="faq-answer">
+        First, enable 2-Step Verification for your Google account.
+        Then visit the Google App Passwords page, enter a name for the app
+        (for example, "Email Scanner" or "Python Script"), and click Create.
+        Copy the generated 16-digit password immediately and use it in place
+        of your regular password inside the application.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        Why can't I see the App Passwords option?
+        <span class="icon">+</span>
+      </button>
+      <div class="faq-answer">
+        The App Passwords option may not appear if 2-Step Verification is not
+        enabled, if Advanced Protection is turned on, or if you are using a
+        work or school account where the administrator has disabled this feature.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        What is IMAP and do I need to enable it?
+        <span class="icon">+</span>
+      </button>
+      <div class="faq-answer">
+        IMAP (Internet Message Access Protocol) allows Gmail to synchronize emails
+        across multiple devices in real time. It is usually enabled by default,
+        but some legacy or third-party integrations may require manual verification.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        How do I manually enable IMAP?
+        <span class="icon">+</span>
+      </button>
+      <div class="faq-answer">
+        Open Gmail in a web browser, click the Settings gear icon,
+        choose "See all settings," then open the "Forwarding and POP/IMAP" tab.
+        Under IMAP Access, select Enable IMAP and click Save Changes.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        How does the application fetch emails securely using IMAP?
+        <span class="icon">+</span>
+      </button>
+      <div class="faq-answer">
+        The application uses IMAP over SSL/TLS on port 993 to encrypt all email
+        data during transmission. To meet 2026 security standards, OAuth 2.0
+        authentication is recommended, which uses short-lived access tokens
+        instead of storing your main email password.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+<section class="tech-stack">
+  <div class="container">
+    <h2>Tech Stack</h2>
+    <div class="stack-icons">
+      <i class="fab fa-html5 html"></i>
+      <i class="fab fa-css3 css"></i>
+      <i class="fab fa-js-square js"></i>
+      <i class="fab fa-python python"></i>
+      <i class="fas fa-database mysql"></i>
+    </div>
+  </div>
+</section>
+
+ <footer class="footer">
+    <p>&copy; 2026 AI Email Quarantine — MCA Final Year Project </p>
+  </footer>
+
+{% endblock %}

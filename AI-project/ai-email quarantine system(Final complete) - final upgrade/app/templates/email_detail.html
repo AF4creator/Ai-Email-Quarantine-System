@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block title %}Email Details{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/email_detail.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="email-detail-container">
+  <div class="email-box">
+    <div class="email-header">
+      <a href="/dashboard" class="btn back-btn">
+        <i class="fas fa-arrow-left"></i> Back to Dashboard
+      </a>
+      <h2 class="email-subject">
+        <i class="fas fa-envelope-open-text"></i> {{ email.subject }}
+      </h2>
+    </div>
+
+    <div class="email-meta">
+      <div class="meta-item">
+        <i class="fas fa-user"></i>
+        <div>
+          <span class="meta-label">From</span>
+          <span class="meta-value">{{ email.sender }}</span>
+        </div>
+      </div>
+      
+      <div class="meta-item">
+        <i class="fas fa-clock"></i>
+        <div>
+          <span class="meta-label">Received</span>
+          <span class="meta-value">{{ email.received_at or 'Unknown' }}</span>
+        </div>
+      </div>
+      
+      <div class="meta-item">
+        <i class="fas fa-info-circle"></i>
+        <div>
+          <span class="meta-label">Status</span>
+          <span class="meta-value status-badge status-{{ email.status.lower() }}">
+            {{ email.status }}
+          </span>
+        </div>
+      </div>
+      
+      <div class="meta-item">
+        <i class="fas fa-shield-alt"></i>
+        <div>
+          <span class="meta-label">Spam Score</span>
+          <span class="meta-value risk-score risk-{{ 'high' if email.spam_score|float > 0.7 else 'medium' if email.spam_score|float > 0.3 else 'low' }}">
+            {{ "%.2f"|format(email.spam_score|float) }}
+          </span>
+        </div>
+      </div>
+      
+      <div class="meta-item">
+        <i class="fas fa-link"></i>
+        <div>
+          <span class="meta-label">URL Scan</span>
+          <span class="meta-value">{{ email.url_status or 'Not scanned' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="email-body">
+      <h3 class="body-title"><i class="fas fa-file-alt"></i> Email Content</h3>
+      <div class="body-content">
+        {{ email.body | safe }}
+      </div>
+    </div>
+
+    <div class="actions">
+      <form method="POST" action="/emails/release/{{ email.email_id }}" class="action-form">
+        <button type="submit" class="btn release">
+          <i class="fas fa-check"></i> Release Email
+        </button>
+      </form>
+
+      <form method="POST" action="/emails/whitelist/{{ email.email_id }}" class="action-form">
+        <button type="submit" class="btn whitelist">
+          <i class="fas fa-user-shield"></i> Whitelist Sender
+        </button>
+      </form>
+
+      <form method="POST" action="/emails/delete/{{ email.email_id }}" class="action-form" 
+            onsubmit="return confirm('Are you sure you want to delete this email? This action cannot be undone.');">
+        <button type="submit" class="btn delete">
+          <i class="fas fa-trash"></i> Delete Email
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

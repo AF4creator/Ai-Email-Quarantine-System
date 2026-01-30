@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ title if title else "AI-Email Quarantine System" }}</title>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"  />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon(32x32)-crop.png') }}">
+  
+
+  {% block extra_css %}{% endblock %}
+</head>
+<body class="{{ session.get('theme', 'light') }}">
+  <header class="navbar">
+    <div class="nav-container">
+      <!-- LEFT -->
+      <div class="nav-left">
+        <img src="{{ url_for('static', filename='favicon (1).png') }}" class="logo" alt="Logo" />
+        <span class="title">AI-Email Quarantine System</span>
+      </div>
+
+      <!-- RIGHT LINKS -->
+      <nav class="nav-links" id="navLinks">
+        <a href="/" class="nav-link"><i class="fas fa-home"></i> Home</a>
+        <a href="/#features" class="nav-link"><i class="fas fa-list"></i> Features</a>
+
+        {% if session.get("user_id") %}
+          <a href="/dashboard" class="nav-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+          <a href="/logout" class="nav-link logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        {% else %}
+          <a href="/login" class="nav-link"><i class="fas fa-sign-in-alt"></i> Login</a>
+          <a href="/register" class="nav-link"><i class="fas fa-user-plus"></i> Register</a>
+        {% endif %}
+
+        <button id="themeToggle" title="Toggle Theme" aria-label="Toggle Theme">🌙</button>
+      </nav>
+
+      <!-- HAMBURGER -->
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <main class="{% block container_class %}page-container{% endblock %}">
+    {% block content %}{% endblock %}
+  </main>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

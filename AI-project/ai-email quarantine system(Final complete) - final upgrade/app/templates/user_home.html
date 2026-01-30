@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+{% block title %}User Home{% endblock %}
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }} scan-alert">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+{% block extra_css %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/user_home.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="user-home-container">
+  <div class="welcome-header">
+    <h2><i class="fas fa-user-circle"></i> Welcome, {{ user_name }}</h2>
+    <p class="welcome-subtitle">Monitor and manage your email security</p>
+  </div>
+
+  <div class="scan-action">
+    <a href="/emails/scan" class="btn btn-primary">
+      <i class="fas fa-search"></i> Scan Mailbox
+    </a>
+  </div>
+
+{% if not scan or scan.total_scanned == 0 %}
+<div class="card empty-scan-card">
+  <div class="empty-state-content">
+    <i class="fas fa-inbox"></i>
+    <h3>No scans performed yet</h3>
+    <p>Scan your mailbox to detect spam, phishing, and malicious emails.</p>
+    <a href="/emails/scan" class="btn btn-primary" style="margin-top: 1rem;">
+      <i class="fas fa-play"></i> Start Your First Scan
+    </a>
+  </div>
+</div>
+{% else %}
+
+<!-- SUMMARY CARDS 
+<div class="summary-cards">
+  <div class="summary-card safe">
+    <span class="label">Safe</span>
+    <span class="count">{{ scan.total_safe }}</span>
+  </div>
+
+  <div class="summary-card suspicious">
+    <span class="label">Suspicious</span>
+    <span class="count">{{ scan.total_suspicious }}</span>
+  </div>
+
+  <div class="summary-card quarantined">
+    <span class="label">Quarantined</span>
+    <span class="count">{{ scan.total_quarantined }}</span>
+  </div>
+</div>
+-->
+
+<!-- SPIKE / LINE CHART -->
+<div class="chart-box full-width fade-in">
+    <h4><i class="fas fa-chart-line"></i> Email Activity Trend</h4>
+    <div class="chart-canvas">
+        <canvas id="lineChart"></canvas>
+    </div>
+</div>
+
+
+<!-- CHARTS -->
+<div class="dashboard-charts">
+    <div class="chart-box fade-in">
+        <h4><i class="fas fa-chart-pie"></i> Email Classification</h4>
+        <div class="chart-canvas">
+            <canvas id="pieChart"></canvas>
+        </div>
+    </div>
+
+    <div class="chart-box fade-in">
+        <h4><i class="fas fa-chart-bar"></i> Email Count</h4>
+        <div class="chart-canvas">
+            <canvas id="barChart"></canvas>
+        </div>
+    </div>
+</div>
+
+
+<div class="card report-card fade-in">
+  <h3><i class="fas fa-file-download"></i> Generate Scan Report</h3>
+  <p class="report-description">Download detailed reports of your email scans in various formats</p>
+  
+  <div class="report-buttons">
+    <a href="{{ url_for('reports.download_report', format='pdf') }}" class="btn btn-outline">
+      <i class="fas fa-file-pdf"></i> Download PDF
+    </a>
+
+    <a href="{{ url_for('reports.download_report', format='docx') }}" class="btn btn-outline">
+      <i class="fas fa-file-word"></i> Download DOCX
+    </a>
+
+    <a href="{{ url_for('reports.download_report', format='txt') }}" class="btn btn-outline">
+      <i class="fas fa-file-alt"></i> Download TXT
+    </a>
+  </div>
+</div>
+
+
+<!-- LAST SCAN SUMMARY -->
+<div class="scan-summary-section">
+  <h3><i class="fas fa-history"></i> Last Scan Summary</h3>
+
+  <div class="table-wrapper">
+    <table class="summary_table">
+      <thead>
+        <tr>
+          <th><i class="fas fa-envelope"></i> Total Scanned</th>
+          <th><i class="fas fa-ban"></i> Quarantined</th>
+          <th><i class="fas fa-exclamation-triangle"></i> Suspicious</th>
+          <th><i class="fas fa-check-circle"></i> Safe</th>
+          <th><i class="fas fa-calendar"></i> Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ scan.total_scanned }}</td>
+          <td>{{ scan.total_quarantined }}</td>
+          <td>{{ scan.total_suspicious }}</td>
+          <td>{{ scan.total_safe }}</td>
+          <td>{{ scan.scan_date }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endif %}
+
+<!-- DATA FOR JS -->
+<script id="mail-stats" type="application/json">
+  {
+    "safe": {{ scan.total_safe if scan else 0 }},
+    "suspicious": {{ scan.total_suspicious if scan else 0 }},
+    "quarantined": {{ scan.total_quarantined if scan else 0 }}
+  }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/chart.js') }}"></script>
+
+</div>
+{% endblock %}

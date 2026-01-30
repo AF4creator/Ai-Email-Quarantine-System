@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <div>
+      <h2><i class="fas fa-tachometer-alt"></i> Email Dashboard</h2>
+      <p class="dashboard-subtitle">Monitor and manage your email security status</p>
+    </div>
+    <a href="{{ url_for('dashboard.user_home') }}" class="btn btn-primary">
+      <i class="fas fa-home"></i> Back to Home
+    </a>
+  </div>
+
+  <div class="stats-cards">
+    <a href="{{ url_for('emails.quarantined_emails') }}"
+       class="stat-card danger">
+      <div class="stat-icon">
+        <i class="fas fa-ban"></i>
+      </div>
+      <h2>{{ quarantined_count }}</h2>
+      <p>Quarantined Emails</p>
+      <div class="stat-footer">
+        <i class="fas fa-arrow-right"></i> View Details
+      </div>
+    </a>
+
+    <a href="{{ url_for('emails.suspicious_emails') }}"
+       class="stat-card warning">
+      <div class="stat-icon">
+        <i class="fas fa-exclamation-triangle"></i>
+      </div>
+      <h2>{{ suspicious_count }}</h2>
+      <p>Suspicious Emails</p>
+      <div class="stat-footer">
+        <i class="fas fa-arrow-right"></i> View Details
+      </div>
+    </a>
+
+    <a href="{{ url_for('emails.safe_emails') }}"
+       class="stat-card success">
+      <div class="stat-icon">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <h2>{{ safe_count }}</h2>
+      <p>Safe Emails</p>
+      <div class="stat-footer">
+        <i class="fas fa-arrow-right"></i> View Details
+      </div>
+    </a>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}{{ category }} Emails{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/email_list.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="email-list-container">
+  <div class="email-list-header">
+    <h3><i class="fas fa-envelope"></i> {{ category }} Emails</h3>
+    <a href="/dashboard" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+  </div>
+
+  {% if emails %}
+  <div class="table-wrapper">
+    <table class="email-list-table">
+      <thead>
+        <tr>
+          <th><i class="fas fa-user"></i> Sender</th>
+          <th><i class="fas fa-file-alt"></i> Subject</th>
+          <th><i class="fas fa-clock"></i> Received</th>
+          <th><i class="fas fa-shield-alt"></i> Risk Score</th>
+          <th><i class="fas fa-cog"></i> Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for email in emails %}
+        <tr>
+          <td>{{ email.sender }}</td>
+          <td title="{{ email.subject }}">{{ email.subject }}</td>
+          <td>{{ email.date }}</td>
+          <td>
+            {% set score = email.spam_score|float %}
+            {% if score < 0.3 %}
+              <span class="risk-score low"><i class="fas fa-check-circle"></i> {{ "%.2f"|format(score) }}</span>
+            {% elif score < 0.7 %}
+              <span class="risk-score medium"><i class="fas fa-exclamation-triangle"></i> {{ "%.2f"|format(score) }}</span>
+            {% else %}
+              <span class="risk-score high"><i class="fas fa-times-circle"></i> {{ "%.2f"|format(score) }}</span>
+            {% endif %}
+          </td>
+          <td>
+            <a href="{{ url_for('emails.view_email', email_id=email.email_id) }}" class="view-btn">
+              <i class="fas fa-eye"></i> View
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="table-wrapper">
+    <div class="empty-state">
+      <i class="fas fa-inbox"></i>
+      <h4>No {{ category.lower() }} emails found</h4>
+      <p>There are no emails in this category at the moment.</p>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

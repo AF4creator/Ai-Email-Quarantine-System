@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block container_class %}auth-container{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">{% endblock %}
+{% block content %}
+<div class="auth-box">
+  <h3><i class="fas fa-sign-in-alt"></i> Secure Login</h3>
+  {% if error %}<div class="error">{{ error }}</div>{% endif %}
+  <form method="POST">
+    <label><i class="fas fa-envelope"></i> Email</label>
+    <input type="email" name="email" required autofocus>
+    <label><i class="fas fa-key"></i> Gmail App Password</label>
+    <input type="password" name="password" placeholder="16-character app password" required>
+    <button type="submit"><i class="fas fa-arrow-right"></i> Login</button>
+  </form>
+  <p class="switch-link">New user? <a href="/register">Register here</a></p>
+</div>
+{% endblock %}
