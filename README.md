@@ -1,4 +1,4 @@
-🤖 AI Email Quarantine System
+🤖 AI Email Quarantine System    
 An AI-powered Email Quarantine System designed to automatically analyze incoming emails, detect potential threats such as spam and phishing, and quarantine suspicious messages before they reach the inbox. This project adds an intelligent security layer to traditional email filtering systems.
 
 📌 Project Overview    
